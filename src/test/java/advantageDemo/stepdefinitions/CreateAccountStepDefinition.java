@@ -2,8 +2,9 @@ package advantageDemo.stepdefinitions;
 
 import advantage_demo.exceptions.FailedGetTextException;
 import advantage_demo.questions.ValidateCreatedAccountQuestion;
+import advantage_demo.questions.ValidateLoginSuccesQuestion;
 import advantage_demo.tasks.CreateAccount;
-import advantage_demo.tasks.Login;
+import advantage_demo.tasks.LoginUser;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -21,7 +22,7 @@ import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorCalled;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
 
-public class GestionProductosStepDefinition {
+public class CreateAccountStepDefinition {
 
     @Managed(driver = "chrome")
     WebDriver herBrowser;
@@ -49,16 +50,17 @@ public class GestionProductosStepDefinition {
                                 .orComplainWith(FailedGetTextException.class, FAILED_GET_TEXT));
     }
 
-    @When("realiza el proceso de Login con usuario registrado")
-    public void loginUser() {
-        theActorInTheSpotlight().attemptsTo(Login.toUser());
+    @When("{word} realiza el proceso de Login con usuario registrado")
+    public void loginUser(String actor) {
+        theActorCalled(actor).wasAbleTo(Open.url(ADVANTAGE_URL));
+        theActorInTheSpotlight().attemptsTo(LoginUser.toUser());
     }
 
     @Then("ingresa a la pagina principal correctamente")
     public void validateLoginUser() {
         theActorInTheSpotlight()
                 .should(
-                        seeThat(ValidateCreatedAccountQuestion.inAdvantageDemo())
+                        seeThat(ValidateLoginSuccesQuestion.inAdvantageDemo())
                                 .orComplainWith(FailedGetTextException.class, FAILED_GET_TEXT));
     }
 }

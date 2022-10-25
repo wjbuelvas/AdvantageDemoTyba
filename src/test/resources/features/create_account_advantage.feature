@@ -12,5 +12,6 @@ Feature: Registro de usuario en AdvantageDemo
     Then la cuenta es creada correctamente
 
   Scenario: Login de usuario Previamente registrado
-    When realiza el proceso de Login con usuario registrado
+    When crea una cuenta para comprar productos
+    And Juan realiza el proceso de Login con usuario registrado
     Then ingresa a la pagina principal correctamente
